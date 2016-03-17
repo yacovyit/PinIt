@@ -5,7 +5,7 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>com.example.yacovyitzhak.myapplication.backend.WizzardEndpoint</param-value>
+            <param-value>com.example.yacovyitzhak.myapplication.backend.WizardEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

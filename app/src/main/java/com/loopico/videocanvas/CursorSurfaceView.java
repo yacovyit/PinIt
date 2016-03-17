@@ -88,16 +88,7 @@ public class CursorSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
         //canvas.drawColor(Color.TRANSPARENT);
         List<Cursor> list = null,wizzardList = null;
-//        if(Globals.getCurrentLayerColor().equals(LayerType.RED)){
-//            list = Globals.redLayerCursorList;
-//            wizzardList =  Globals.redWizzardLayerCursorList;
-//        }else if(Globals.getCurrentLayerColor().equals(LayerType.GREEN)){
-//            list = Globals.greenLayerCursorList;
-//            wizzardList =  Globals.greenWizzardLayerCursorList;
-//        }else if(Globals.getCurrentLayerColor().equals(LayerType.BLUE)){
-//            list = Globals.blueLayerCursorList;
-//            wizzardList =  Globals.blueWizzardLayerCursorList;
-//        }
+
         Layer<Cursor> currentLayer = Manager.Instance().getCurrentLayer();
         list = currentLayer.getLayer(Origin.USER);
         wizzardList = currentLayer.getLayer(Origin.WIZZARD);

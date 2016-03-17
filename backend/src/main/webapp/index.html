@@ -2,7 +2,7 @@
 <html >
 <head>
 
-    <title>Wizzard Services</title>
+    <title>Wizard Services</title>
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
@@ -20,7 +20,7 @@ background: linear-gradient(to left, #c2e59c , #64b3f4); /* W3C, IE 10+/ Edge, F
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">The Wizzad  <bold>  magic</bold></a>
+            <a class="navbar-brand" href="#">The Wizard  <bold>  magic</bold></a>
 
         </div>
 
@@ -30,12 +30,13 @@ background: linear-gradient(to left, #c2e59c , #64b3f4); /* W3C, IE 10+/ Edge, F
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation And Files <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="https://console.cloud.google.com/m/cloudstorage/b/yapss/o/app-debug.apk">APK</a></li>
+
                         <li><a href="https://github.com/yacovyit/PinIt">Github</a></li>
 
                     </ul>
                 </li>
 
-                <li><a href="/_ah/api/explorer">Wizzard API Explorer</a></li>
+                <li><a href="/_ah/api/explorer">Wizard API Explorer</a></li>
                 <li><a href="https://console.developers.google.com">Google Developers Console</a></li>
             </ul>
         </div>
@@ -56,7 +57,7 @@ background: linear-gradient(to left, #c2e59c , #64b3f4); /* W3C, IE 10+/ Edge, F
         <div class="row">
             <div class="col-lg-12">
                 <h1>The Wizard of Oz<span> <img src="img/pinit.png"></span> </h1>
-                <p>Enter your name and press the button below to call your Wizzard API.</p>
+                <p>Enter your name and press the button below to call your Wizard API.</p>
                 <form>
                     <div class="input-group">
                         <input type="text" class="form-control input-lg" placeholder="Name" id="nameInput" />
@@ -82,7 +83,7 @@ background: linear-gradient(to left, #c2e59c , #64b3f4); /* W3C, IE 10+/ Edge, F
     function enableClick() {
       document.getElementById('helloButton').onclick = function() {
         var name = document.getElementById('nameInput').value;
-        gapi.client.wizzardApi.sayHi({'name': name}).execute(
+        gapi.client.wizardApi.sayHi({'name': name}).execute(
           function(response) {
             var outputAlertDiv = document.getElementById('outputAlert');
             outputAlertDiv.style.visibility = 'visible';
@@ -102,7 +103,7 @@ background: linear-gradient(to left, #c2e59c , #64b3f4); /* W3C, IE 10+/ Edge, F
     }
     // This is called initially
     function init() {
-      var apiName = 'wizzardApi';
+      var apiName = 'wizardApi';
       var apiVersion = 'v1';
       var apiRoot = 'https://' + window.location.host + '/_ah/api';
       if (window.location.hostname == 'localhost'

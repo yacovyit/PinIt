@@ -3,11 +3,10 @@ package com.loopico.videocanvas.web;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.util.Pair;
-import android.widget.Toast;
 
 
-import com.example.yacovyitzhak.myapplication.backend.wizzardApi.WizzardApi;
-import com.example.yacovyitzhak.myapplication.backend.wizzardApi.model.CursorBean;
+import com.example.yacovyitzhak.myapplication.backend.wizardApi.WizardApi;
+import com.example.yacovyitzhak.myapplication.backend.wizardApi.model.CursorBean;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -17,7 +16,6 @@ import com.loopico.videocanvas.Globals;
 import com.loopico.videocanvas.Origin;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +24,7 @@ import java.util.List;
 public class EndpointsAsyncTask extends AsyncTask<Pair<Context, Cursor>, Void, CursorBean> {
 
 
-    private static WizzardApi myApiService = null;
+    private static WizardApi myApiService = null;
     private Context context;
     private List<Cursor> srcCursorList,dstCursolList;
     private Cursor srcCursor = null;
@@ -37,9 +35,9 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, Cursor>, Void, C
     @Override
     protected CursorBean doInBackground(Pair<Context, Cursor>... params) {
         if(myApiService == null) {  // Only do this once
-            WizzardApi.Builder builder = new WizzardApi.Builder(AndroidHttp.newCompatibleTransport(),
+            WizardApi.Builder builder = new WizardApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
-                    .setRootUrl(Globals.wizzardApiUrl)
+                    .setRootUrl(Globals.wizardAdiUrl)
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
