@@ -3,6 +3,7 @@ package com.loopico.videocanvas;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
@@ -33,21 +34,10 @@ public class SurfaceViewActivity extends Activity {
     private VideoView videoView;
     private int x, y;
 
-    /*
-    videoView.stopPlayback();
-    videoView.setVideoPath(newVideoPath);
-    videoView.start();
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        //set default layer to RED
-        //Globals.setCurrentLayerColor(LayerType.RED);
 
         //init view's
         FrameLayout frameLayoutContainer = (FrameLayout) findViewById(R.id.frameLayoutContainer);
@@ -72,11 +62,10 @@ public class SurfaceViewActivity extends Activity {
         screen2.setOnClickListener(screenButtonsListener);
 
         //set background
+        SelectScreenButton(screen1);
+        UnSelectScreenButton(screen2);
         Manager.Instance().initColor(redLayerButton.getCurrentTextColor());
         Manager.Instance().setCurrentColor(redLayerButton.getCurrentTextColor());
-
-        buttonsContainerRelativeLayout.setBackgroundColor(Manager.Instance().getCurrentColor());
-        buttonsContainerRelativeLayout.refreshDrawableState();
 
         updateBackground();
 
@@ -139,15 +128,17 @@ public class SurfaceViewActivity extends Activity {
             //String url = null;
             switch (v.getId()) {
                 case R.id.screen1:
-                    //url = Globals.starWarsUrl;
                     Manager.Instance().setCurrentScreen(Manager.ScreenNames.STAR_WARS);
+                    SelectScreenButton(screen1);
+                    UnSelectScreenButton(screen2);
                     break;
                 case R.id.screen2:
-                    //url = Globals.larryBirdUrl;
+                    SelectScreenButton(screen2);
+                    UnSelectScreenButton(screen1);
                     Manager.Instance().setCurrentScreen(Manager.ScreenNames.LARRY_BIRD);
                     break;
             }
-
+            updateBackground();
             videoView.stopPlayback();
             videoView.setVideoPath(((VideoScreen)Manager.Instance().getCurrentScreen()).getUrl());
             videoView.start();
@@ -188,48 +179,38 @@ public class SurfaceViewActivity extends Activity {
 
         }
     };
-
+    private void SelectScreenButton(Button btn){
+        btn.setBackgroundColor(Color.BLACK);
+        btn.setTextColor(Color.WHITE);
+    }
+    private void UnSelectScreenButton(Button btn){
+        btn.setBackgroundColor(Color.WHITE);
+        btn.setTextColor(Color.BLACK);
+    }
     private void clearCursor(){
-//        Globals.redLayerCursorList.clear();
-//        Globals.greenLayerCursorList.clear();
-//        Globals.blueLayerCursorList.clear();
-//        Globals.redWizzardLayerCursorList.clear();
-//        Globals.greenWizzardLayerCursorList.clear();
-//        Globals.blueWizzardLayerCursorList.clear();
         Manager.Instance().clear();
     }
     private void updateBackground(){
         buttonsContainerRelativeLayout.setBackgroundColor(Manager.Instance().getCurrentColor());
+        buttonsContainerRelativeLayout.refreshDrawableState();
     }
 
     //create GestureDetector for long press on canvas
     final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
         public void onLongPress(MotionEvent e) {
-            Log.i("LONG-PRESS", "Longpress detected");
+            //Log.i("LONG-PRESS", "Longpress detected");
             x = (int)e.getX();
             y = (int)e.getY();
 
             //TODO add cursor to database
-            Cursor c = new Cursor(x, y,Manager.Instance().getCurrentLayerType(),Origin.USER, Manager.Instance().getCursorID());
             Manager.Instance().addCursorID();
+            Cursor c = new Cursor(x, y,Manager.Instance().getCurrentLayerType(),Origin.USER, Manager.Instance().getCursorID());
+
             Manager.Instance().add(c);
             List<Cursor> srcList = Manager.Instance().getCurrentLayer().getLayer(Origin.USER);
             List<Cursor>  dstList =  Manager.Instance().getCurrentLayer().getLayer(Origin.WIZZARD);;
             new EndpointsAsyncTask(srcList,dstList).execute(new Pair<Context, Cursor>(SurfaceViewActivity.this,c));
 
-//            if (Globals.getCurrentLayerColor().equals(LayerType.RED)) {
-//                Globals.redLayerCursorList.add(Globals.getLastAddedCursor());
-//                srcList = Globals.redLayerCursorList;
-//                dstList =  Globals.redWizzardLayerCursorList;
-//            } else if (Globals.getCurrentLayerColor().equals(LayerType.GREEN)) {
-//                Globals.greenLayerCursorList.add(Globals.getLastAddedCursor());
-//                srcList = Globals.greenLayerCursorList;
-//                dstList =  Globals.greenWizzardLayerCursorList;
-//            } else if (Globals.getCurrentLayerColor().equals(LayerType.BLUE)) {
-//                Globals.blueLayerCursorList.add(Globals.getLastAddedCursor());
-//                srcList = Globals.blueLayerCursorList;
-//                dstList =  Globals.blueWizzardLayerCursorList;
-//            }
           }
     });
 

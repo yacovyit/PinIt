@@ -18,8 +18,7 @@
             android:layout_height="wrap_content"
             android:text="I"
             android:layout_alignParentLeft="true"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
+
             android:id="@+id/screen1"
             />
         <Button
@@ -28,8 +27,7 @@
 
             android:layout_toRightOf="@+id/screen1"
             android:text="II"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
+
             android:id="@+id/screen2"
             />
 
@@ -49,6 +47,7 @@
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:minWidth="0dp"
+            android:gravity="center_vertical"
             android:text="R"
             android:layout_toLeftOf="@+id/greenLayerButton"
             android:textColor="@android:color/holo_red_dark"

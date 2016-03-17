@@ -12,8 +12,6 @@ public class Manager {
         STAR_WARS,LARRY_BIRD
     }
     private long cursorID ;
-    //private LayerType currentLayerType;
-    //private Cursor lastAddedCursor;
 
     private Map<ScreenNames,Screen> screensMap;
     private ScreenNames activeScreen;
@@ -40,6 +38,7 @@ public class Manager {
     }
     public void setCurrentScreen(ScreenNames activeScreen){
         this.activeScreen = activeScreen;
+
     }
     public Layer getCurrentLayer(){
         return screensMap.get(activeScreen).getActiveLayer();
@@ -68,8 +67,8 @@ public class Manager {
         return cursorID;
     }
 
-    public long addCursorID() {
-        return cursorID++;
+    public void addCursorID() {
+        cursorID++;
     }
     public <T extends Cursor> void add (T item) {
 
