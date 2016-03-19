@@ -1,5 +1,6 @@
 package com.loopico.videocanvas;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ public class Screen<T extends Cursor> implements IScreen{
     private int currentColor;
 
     public Screen() {
-        this.layers = new Hashtable<>();
+        this.layers = new HashMap<>();
         layers.put(LayerType.RED, new Layer<T>());
         layers.put(LayerType.GREEN, new Layer<T>());
         layers.put(LayerType.BLUE, new Layer<T>());

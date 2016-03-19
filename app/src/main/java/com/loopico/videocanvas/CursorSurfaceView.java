@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CursorSurfaceView extends SurfaceView implements SurfaceHolder.Callback
@@ -85,23 +84,26 @@ public class CursorSurfaceView extends SurfaceView implements SurfaceHolder.Call
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-
-        //canvas.drawColor(Color.TRANSPARENT);
-        List<Cursor> list = null,wizzardList = null;
+        List<Cursor> list = null,wizardList = null;
 
         Layer<Cursor> currentLayer = Manager.Instance().getCurrentLayer();
         list = currentLayer.getLayer(Origin.USER);
-        wizzardList = currentLayer.getLayer(Origin.WIZZARD);
-        for (Cursor cursor :list) {
+        wizardList = currentLayer.getLayer(Origin.WIZARD);
+        synchronized (list) {
+            for (Cursor cursor : list) {
 
-            canvas.drawBitmap(Utils.changeImageColor(Globals.targetIcon, Manager.Instance().getCurrentColor()), cursor.getX() - (Globals.targetIcon.getWidth() / 2), cursor.getY() - (Globals.targetIcon.getHeight() / 2), null);
-            canvas.drawText(cursor.getId()+"", cursor.getX(),cursor.getY(),paint);
+                canvas.drawBitmap(Utils.changeImageColor(Globals.targetIcon, Manager.Instance().getCurrentColor()), cursor.getX() - (Globals.targetIcon.getWidth() / 2), cursor.getY() - (Globals.targetIcon.getHeight() / 2), null);
+                canvas.drawText(cursor.getId() + "", cursor.getX(), cursor.getY(), paint);
+            }
         }
-        for (Cursor cursor :wizzardList) {
-            canvas.drawBitmap(Utils.changeImageColor(Globals.wizzardIcon, Manager.Instance().getCurrentColor()), cursor.getX() - (Globals.targetIcon.getWidth() / 2), cursor.getY() - (Globals.targetIcon.getHeight() / 2), null);
-            canvas.drawText(cursor.getId()+"", cursor.getX(),cursor.getY(),paint);
+        synchronized (list){
+            for (Cursor cursor :wizardList) {
+                canvas.drawBitmap(Utils.changeImageColor(Globals.wizardIcon, Manager.Instance().getCurrentColor()), cursor.getX() - (Globals.targetIcon.getWidth() / 2), cursor.getY() - (Globals.targetIcon.getHeight() / 2), null);
+                canvas.drawText(cursor.getId()+"", cursor.getX(),cursor.getY(),paint);
 
+            }
         }
+
 
     }
 

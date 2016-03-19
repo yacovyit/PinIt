@@ -37,8 +37,8 @@ public class WizardEndpoint {
         CursorBean response = new CursorBean();
         response.setX(x);
         response.setX(y);
-        response.setxWizzard(x + 100);
-        response.setyWizzard(y + 100);
+        response.setxWizzard(x +150);
+        response.setyWizzard(y + 10);
         return response;
     }
     @ApiMethod(name = "cursorLocationRandom")

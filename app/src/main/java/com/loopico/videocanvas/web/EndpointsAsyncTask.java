@@ -68,9 +68,15 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, Cursor>, Void, C
        // Toast.makeText(context, result, Toast.LENGTH_LONG).show();
         if (result!=null){
             if (srcCursorList!=null && dstCursolList!=null){
-                srcCursorList.remove(srcCursor);
-                Cursor wizzardCursor = new Cursor(result.getXWizzard(),result.getYWizzard(),srcCursor.getLayerColor(), Origin.WIZZARD,srcCursor.getId());
-                dstCursolList.add(wizzardCursor);
+                Cursor wizardCursor = new Cursor(result.getXWizzard(),result.getYWizzard(),srcCursor.getLayerColor(), Origin.WIZARD,srcCursor.getId());
+
+                synchronized (srcCursorList){
+                    srcCursorList.remove(srcCursor);
+                }
+                synchronized (dstCursolList){
+                    dstCursolList.add(wizardCursor);
+                }
+
             }
         }else{
             //handel error

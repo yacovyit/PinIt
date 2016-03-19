@@ -1,6 +1,7 @@
 package com.loopico.videocanvas;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,11 +16,11 @@ public class Layer<T extends Cursor> implements ILayer<T>,ICursor<T>{
     private Map<Origin,List<T>> innerlayersMap;
 
     public Layer() {
-        innerlayersMap = new Hashtable<Origin,List<T>>();
+        innerlayersMap = new HashMap<>();
         //user inner layer
-        innerlayersMap.put(Origin.USER, new LinkedList<T>());
+        innerlayersMap.put(Origin.USER, Collections.synchronizedList(new LinkedList<T>()));
         //wizzard inner layer
-        innerlayersMap.put(Origin.WIZZARD, new LinkedList<T>());
+        innerlayersMap.put(Origin.WIZARD, Collections.synchronizedList(new LinkedList<T>()));
     }
 
     public List<T> getLayer(Origin origin){
@@ -28,12 +29,19 @@ public class Layer<T extends Cursor> implements ILayer<T>,ICursor<T>{
     @Override
     public void add(T item){
         if (item!=null) {
-            innerlayersMap.get(item.getOrigin()).add(item);
+            List<T> list = innerlayersMap.get(item.getOrigin());
+            synchronized (list){
+                list.add(item);
+            }
+
         }
     }
     @Override
     public boolean remove(T item){
-        return innerlayersMap.get(item.getOrigin()).remove(item);
+        List<T> list = innerlayersMap.get(item.getOrigin());
+        synchronized (list){
+            return list.remove(item);
+        }
     }
 
     @Override
@@ -44,7 +52,12 @@ public class Layer<T extends Cursor> implements ILayer<T>,ICursor<T>{
     public void clear(){
         for (Map.Entry<Origin, List<T>> entry : innerlayersMap.entrySet())
         {
-           entry.getValue().clear();
+            List<T> list = entry.getValue();
+            synchronized (list)
+            {
+                list.clear();
+            }
+
         }
     }
 

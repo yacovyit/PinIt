@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.VideoView;
 
 import com.loopico.videocanvas.web.EndpointsAsyncTask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SurfaceViewActivity extends Activity {
@@ -79,7 +77,7 @@ public class SurfaceViewActivity extends Activity {
             }
         });
         Globals.targetIcon = BitmapFactory.decodeResource(getResources(), R.drawable.target_lg);
-        Globals.wizzardIcon = BitmapFactory.decodeResource(getResources(), R.drawable.pin);
+        Globals.wizardIcon = BitmapFactory.decodeResource(getResources(), R.drawable.pin);
         //upper left corner
         x = 0;
         y = 0;
@@ -208,7 +206,7 @@ public class SurfaceViewActivity extends Activity {
 
             Manager.Instance().add(c);
             List<Cursor> srcList = Manager.Instance().getCurrentLayer().getLayer(Origin.USER);
-            List<Cursor>  dstList =  Manager.Instance().getCurrentLayer().getLayer(Origin.WIZZARD);;
+            List<Cursor>  dstList =  Manager.Instance().getCurrentLayer().getLayer(Origin.WIZARD);;
             new EndpointsAsyncTask(srcList,dstList).execute(new Pair<Context, Cursor>(SurfaceViewActivity.this,c));
 
           }
