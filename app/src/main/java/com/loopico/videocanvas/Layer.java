@@ -19,7 +19,7 @@ public class Layer<T extends Cursor> implements ILayer<T>,ICursor<T>{
         innerlayersMap = new HashMap<>();
         //user inner layer
         innerlayersMap.put(Origin.USER, Collections.synchronizedList(new LinkedList<T>()));
-        //wizzard inner layer
+        //wizard inner layer
         innerlayersMap.put(Origin.WIZARD, Collections.synchronizedList(new LinkedList<T>()));
     }
 
