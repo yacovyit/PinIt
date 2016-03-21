@@ -1,4 +1,8 @@
-package com.loopico.videocanvas;
+package com.loopico.videocanvas.interfaces;
+
+import com.loopico.videocanvas.Cursor;
+import com.loopico.videocanvas.Layer;
+import com.loopico.videocanvas.LayerType;
 
 /**
  * Created by yacovyitzhak on 16/03/2016.

@@ -1,4 +1,4 @@
-package com.loopico.videocanvas;
+package com.loopico.videocanvas.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +15,16 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
+import com.loopico.videocanvas.CursorSurfaceView;
+import com.loopico.videocanvas.R;
+import com.loopico.videocanvas.app.AppSingleton;
+import com.loopico.videocanvas.app.Globals;
+import com.loopico.videocanvas.enums.LayerType;
+import com.loopico.videocanvas.enums.Origin;
+import com.loopico.videocanvas.enums.ScreenName;
+import com.loopico.videocanvas.pinitclasses.Cursor;
+import com.loopico.videocanvas.pinitclasses.Manager;
+import com.loopico.videocanvas.pinitclasses.VideoScreen;
 import com.loopico.videocanvas.web.EndpointsAsyncTask;
 
 import java.util.List;
@@ -76,8 +86,8 @@ public class SurfaceViewActivity extends Activity {
                 return gestureDetector.onTouchEvent(event);
             }
         });
-        Globals.targetIcon = BitmapFactory.decodeResource(getResources(), R.drawable.target_lg);
-        Globals.wizardIcon = BitmapFactory.decodeResource(getResources(), R.drawable.pin);
+        AppSingleton.getInstance().setTargetIcon(BitmapFactory.decodeResource(getResources(), R.drawable.target_lg));
+        AppSingleton.getInstance().setWizardIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pin));
         //upper left corner
         x = 0;
         y = 0;
@@ -126,14 +136,14 @@ public class SurfaceViewActivity extends Activity {
             //String url = null;
             switch (v.getId()) {
                 case R.id.screen1:
-                    Manager.Instance().setCurrentScreen(Manager.ScreenNames.STAR_WARS);
+                    Manager.Instance().setCurrentScreen(ScreenName.STAR_WARS);
                     SelectScreenButton(screen1);
                     UnSelectScreenButton(screen2);
                     break;
                 case R.id.screen2:
                     SelectScreenButton(screen2);
                     UnSelectScreenButton(screen1);
-                    Manager.Instance().setCurrentScreen(Manager.ScreenNames.LARRY_BIRD);
+                    Manager.Instance().setCurrentScreen(ScreenName.LARRY_BIRD);
                     break;
             }
             updateBackground();
@@ -202,7 +212,7 @@ public class SurfaceViewActivity extends Activity {
 
             //TODO add cursor to database
             Manager.Instance().addCursorID();
-            Cursor c = new Cursor(x, y,Manager.Instance().getCurrentLayerType(),Origin.USER, Manager.Instance().getCursorID());
+            Cursor c = new Cursor(x, y,Manager.Instance().getCurrentLayerType(), Origin.USER, Manager.Instance().getCursorID(),Manager.Instance().getActiveScreen());
 
             Manager.Instance().add(c);
             List<Cursor> srcList = Manager.Instance().getCurrentLayer().getLayer(Origin.USER);

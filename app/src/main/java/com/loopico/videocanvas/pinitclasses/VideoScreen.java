@@ -1,9 +1,12 @@
-package com.loopico.videocanvas;
+package com.loopico.videocanvas.pinitclasses;
+
+import com.loopico.videocanvas.pinitclasses.Cursor;
+import com.loopico.videocanvas.pinitclasses.Screen;
 
 /**
  * Created by yacovyitzhak on 17/03/2016.
  */
-public class VideoScreen<T extends Cursor > extends Screen<T> {
+public class VideoScreen<T extends Cursor> extends Screen<T> {
 
 
     private String url;

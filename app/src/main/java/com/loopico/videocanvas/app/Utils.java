@@ -1,4 +1,4 @@
-package com.loopico.videocanvas;
+package com.loopico.videocanvas.app;
 
 import android.content.Context;
 import android.graphics.Bitmap;

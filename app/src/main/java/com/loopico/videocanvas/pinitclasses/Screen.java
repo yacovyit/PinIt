@@ -1,14 +1,17 @@
-package com.loopico.videocanvas;
+package com.loopico.videocanvas.pinitclasses;
+
+import com.loopico.videocanvas.enums.LayerType;
+import com.loopico.videocanvas.interfaces.IScreen;
+import com.loopico.videocanvas.pinitclasses.Cursor;
+import com.loopico.videocanvas.pinitclasses.Layer;
 
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by yacovyitzhak on 16/03/2016.
  */
-public class Screen<T extends Cursor> implements IScreen{
+public class Screen<T extends Cursor> implements IScreen {
 
 
     private Map<LayerType,Layer<T>> layers;

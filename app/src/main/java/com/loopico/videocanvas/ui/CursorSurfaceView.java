@@ -1,4 +1,4 @@
-package com.loopico.videocanvas;
+package com.loopico.videocanvas.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +8,13 @@ import android.graphics.PixelFormat;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.loopico.videocanvas.app.AppSingleton;
+import com.loopico.videocanvas.app.Utils;
+import com.loopico.videocanvas.enums.Origin;
+import com.loopico.videocanvas.pinitclasses.Cursor;
+import com.loopico.videocanvas.pinitclasses.Layer;
+import com.loopico.videocanvas.pinitclasses.Manager;
 
 import java.util.List;
 
@@ -92,13 +99,13 @@ public class CursorSurfaceView extends SurfaceView implements SurfaceHolder.Call
         synchronized (list) {
             for (Cursor cursor : list) {
 
-                canvas.drawBitmap(Utils.changeImageColor(Globals.targetIcon, Manager.Instance().getCurrentColor()), cursor.getX() - (Globals.targetIcon.getWidth() / 2), cursor.getY() - (Globals.targetIcon.getHeight() / 2), null);
+                canvas.drawBitmap(Utils.changeImageColor(AppSingleton.getInstance().getTargetIcon(), Manager.Instance().getCurrentColor()), cursor.getX() - (AppSingleton.getInstance().getTargetIcon().getWidth() / 2), cursor.getY() - (AppSingleton.getInstance().getTargetIcon().getHeight() / 2), null);
                 canvas.drawText(cursor.getId() + "", cursor.getX(), cursor.getY(), paint);
             }
         }
         synchronized (list){
             for (Cursor cursor :wizardList) {
-                canvas.drawBitmap(Utils.changeImageColor(Globals.wizardIcon, Manager.Instance().getCurrentColor()), cursor.getX() - (Globals.targetIcon.getWidth() / 2), cursor.getY() - (Globals.targetIcon.getHeight() / 2), null);
+                canvas.drawBitmap(Utils.changeImageColor(AppSingleton.getInstance().getWizardIcon(), Manager.Instance().getCurrentColor()), cursor.getX() - (AppSingleton.getInstance().getTargetIcon().getWidth() / 2), cursor.getY() - (AppSingleton.getInstance().getTargetIcon().getHeight() / 2), null);
                 canvas.drawText(cursor.getId()+"", cursor.getX(),cursor.getY(),paint);
 
             }

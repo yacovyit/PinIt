@@ -1,27 +1,31 @@
-package com.loopico.videocanvas;
+package com.loopico.videocanvas.pinitclasses;
+
+import com.loopico.videocanvas.Cursor;
+import com.loopico.videocanvas.Globals;
+import com.loopico.videocanvas.Screen;
+import com.loopico.videocanvas.VideoScreen;
+import com.loopico.videocanvas.enums.LayerType;
+import com.loopico.videocanvas.enums.ScreenName;
 
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by yacovyitzhak on 17/03/2016.
  */
 public class Manager {
-    public enum ScreenNames {
-        STAR_WARS,LARRY_BIRD
-    }
+
     private long cursorID ;
 
-    private Map<ScreenNames,Screen> screensMap;
-    private ScreenNames activeScreen;
+    private Map<ScreenName,Screen> screensMap;
+    private ScreenName activeScreen;
     private static Manager manager;
     private Manager(){
         screensMap = new Hashtable<>();
-        screensMap.put(ScreenNames.STAR_WARS,new VideoScreen(Globals.starWarsUrl));
-        screensMap.put(ScreenNames.LARRY_BIRD,new VideoScreen(Globals.larryBirdUrl));
+        screensMap.put(ScreenName.STAR_WARS,new VideoScreen(Globals.starWarsUrl));
+        screensMap.put(ScreenName.LARRY_BIRD,new VideoScreen(Globals.larryBirdUrl));
 
-        activeScreen = ScreenNames.STAR_WARS;
+        activeScreen = ScreenName.STAR_WARS;
 
     }
     public static Manager Instance(){
@@ -36,7 +40,7 @@ public class Manager {
     public Screen getCurrentScreen(){
         return screensMap.get(activeScreen);
     }
-    public void setCurrentScreen(ScreenNames activeScreen){
+    public void setCurrentScreen(ScreenName activeScreen){
         this.activeScreen = activeScreen;
 
     }
@@ -51,7 +55,7 @@ public class Manager {
         getCurrentScreen().setCurrentColor(currentColor);
     }
     public void initColor(int initColor) {
-        for (Map.Entry<ScreenNames,Screen> entry : screensMap.entrySet())
+        for (Map.Entry<ScreenName,Screen> entry : screensMap.entrySet())
         {
             entry.getValue().setCurrentColor(initColor);
         }
@@ -73,5 +77,12 @@ public class Manager {
     public <T extends Cursor> void add (T item) {
 
         getCurrentScreen().add(item);
+    }
+    public ScreenName getActiveScreen() {
+        return activeScreen;
+    }
+
+    public void setActiveScreen(ScreenName activeScreen) {
+        this.activeScreen = activeScreen;
     }
 }

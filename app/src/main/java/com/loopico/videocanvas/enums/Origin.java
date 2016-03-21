@@ -1,4 +1,4 @@
-package com.loopico.videocanvas;
+package com.loopico.videocanvas.enums;
 
 /**
  * Created by yacovyitzhak on 16/03/2016.
