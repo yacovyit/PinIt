@@ -1,6 +1,6 @@
 package com.loopico.videocanvas.interfaces;
 
-import com.loopico.videocanvas.Origin;
+import com.loopico.videocanvas.enums.Origin;
 
 /**
  * Created by yacovyitzhak on 16/03/2016.

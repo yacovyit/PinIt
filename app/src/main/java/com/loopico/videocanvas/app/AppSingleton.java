@@ -2,7 +2,7 @@ package com.loopico.videocanvas.app;
 
 import android.graphics.Bitmap;
 
-import com.loopico.videocanvas.web.PinItFireBase;
+import com.loopico.videocanvas.firebase.PinItFireBase;
 
 /**
  * Created by yacovyitzhak on 20/03/2016.

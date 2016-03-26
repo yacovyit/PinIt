@@ -11,9 +11,10 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-import com.loopico.videocanvas.Cursor;
-import com.loopico.videocanvas.Globals;
-import com.loopico.videocanvas.Origin;
+import com.loopico.videocanvas.pinitclasses.Cursor;
+import com.loopico.videocanvas.app.Globals;
+import com.loopico.videocanvas.enums.Origin;
+import com.loopico.videocanvas.pinitclasses.Manager;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,11 +27,8 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, Cursor>, Void, C
 
     private static WizardApi myApiService = null;
     private Context context;
-    private List<Cursor> srcCursorList,dstCursolList;
     private Cursor srcCursor = null;
-    public EndpointsAsyncTask(List<Cursor> srcCursorList,List<Cursor> dstCursolList){
-        this.srcCursorList = srcCursorList;
-        this.dstCursolList = dstCursolList;
+    public EndpointsAsyncTask(){
     }
     @Override
     protected CursorBean doInBackground(Pair<Context, Cursor>... params) {
@@ -65,21 +63,11 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, Cursor>, Void, C
 
     @Override
     protected void onPostExecute(CursorBean result) {
-       // Toast.makeText(context, result, Toast.LENGTH_LONG).show();
         if (result!=null){
-            if (srcCursorList!=null && dstCursolList!=null){
-                Cursor wizardCursor = new Cursor(result.getXWizzard(),result.getYWizzard(),srcCursor.getLayerColor(), Origin.WIZARD,srcCursor.getId());
-
-                synchronized (srcCursorList){
-                    srcCursorList.remove(srcCursor);
-                }
-                synchronized (dstCursolList){
-                    dstCursolList.add(wizardCursor);
-                }
-
-            }
-        }else{
-            //handel error
+                Cursor wizardCursor = new Cursor(result.getXWizzard(),result.getYWizzard(),srcCursor.getLayerColor(), Origin.WIZARD,srcCursor.getId(),srcCursor.getScreenName());
+                wizardCursor.setFireBaseSrcClientId(srcCursor.getFireBaseClientId());
+                Manager.Instance().remove(srcCursor);
+                Manager.Instance().add(wizardCursor);
         }
     }
 }

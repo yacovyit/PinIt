@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
-import com.loopico.videocanvas.CursorSurfaceView;
 import com.loopico.videocanvas.R;
 import com.loopico.videocanvas.app.AppSingleton;
 import com.loopico.videocanvas.app.Globals;
@@ -115,25 +114,38 @@ public class SurfaceViewActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (videoView!=null){
+            videoView.start();
+        }
     }
     @Override
     protected void onPause() {
         super.onPause();
+        if (videoView!=null){
+            videoView.pause();
+        }
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        if (videoView!=null){
+            videoView.stopPlayback();
+        }
     }
     @Override
     protected void onResume() {
         super.onResume();
+        if (videoView!=null){
+            videoView.resume();
+        }
+
     }
     //Data
     private View.OnClickListener screenButtonsListener =  new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //String url = null;
             switch (v.getId()) {
                 case R.id.screen1:
                     Manager.Instance().setCurrentScreen(ScreenName.STAR_WARS);
@@ -203,7 +215,6 @@ public class SurfaceViewActivity extends Activity {
         buttonsContainerRelativeLayout.refreshDrawableState();
     }
 
-    //create GestureDetector for long press on canvas
     final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
         public void onLongPress(MotionEvent e) {
             //Log.i("LONG-PRESS", "Longpress detected");
@@ -211,15 +222,11 @@ public class SurfaceViewActivity extends Activity {
             y = (int)e.getY();
 
             //TODO add cursor to database
-            Manager.Instance().addCursorID();
-            Cursor c = new Cursor(x, y,Manager.Instance().getCurrentLayerType(), Origin.USER, Manager.Instance().getCursorID(),Manager.Instance().getActiveScreen());
+            Manager.Instance().addCursorID(SurfaceViewActivity.this);
+            Cursor c = new Cursor(x, y,Manager.Instance().getCurrentLayerType(), Origin.USER, Manager.Instance().getCursorID(SurfaceViewActivity.this),Manager.Instance().getActiveScreen());
 
             Manager.Instance().add(c);
-            List<Cursor> srcList = Manager.Instance().getCurrentLayer().getLayer(Origin.USER);
-            List<Cursor>  dstList =  Manager.Instance().getCurrentLayer().getLayer(Origin.WIZARD);;
-            new EndpointsAsyncTask(srcList,dstList).execute(new Pair<Context, Cursor>(SurfaceViewActivity.this,c));
-
+            new EndpointsAsyncTask().execute(new Pair<Context, Cursor>(SurfaceViewActivity.this,c));
           }
     });
-
 }

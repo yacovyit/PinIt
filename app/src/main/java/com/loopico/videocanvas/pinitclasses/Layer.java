@@ -1,11 +1,10 @@
 package com.loopico.videocanvas.pinitclasses;
 
-import com.loopico.videocanvas.Cursor;
-import com.loopico.videocanvas.Globals;
-import com.loopico.videocanvas.Origin;
+import com.loopico.videocanvas.app.Globals;
+import com.loopico.videocanvas.enums.Origin;
 import com.loopico.videocanvas.interfaces.ICursor;
 import com.loopico.videocanvas.interfaces.ILayer;
-import com.loopico.videocanvas.web.PinItFireBase;
+import com.loopico.videocanvas.firebase.PinItFireBase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import java.util.Map;
  * Created by yacovyitzhak on 16/03/2016.
  */
 public class Layer<T extends Cursor> implements ILayer<T>,ICursor<T> {
-
 
     private Map<Origin,List<T>> innerlayersMap;
 
@@ -40,8 +38,6 @@ public class Layer<T extends Cursor> implements ILayer<T>,ICursor<T> {
                 list.add(item);
             }
             PinItFireBase.add(Globals.FIREBASE_CAMERA_URL,item);
-
-
         }
     }
     @Override
@@ -65,8 +61,6 @@ public class Layer<T extends Cursor> implements ILayer<T>,ICursor<T> {
             {
                 list.clear();
             }
-
         }
     }
-
 }

@@ -1,9 +1,9 @@
 package com.loopico.videocanvas.pinitclasses;
 
-import com.loopico.videocanvas.Cursor;
-import com.loopico.videocanvas.Globals;
-import com.loopico.videocanvas.Screen;
-import com.loopico.videocanvas.VideoScreen;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.loopico.videocanvas.app.Globals;
 import com.loopico.videocanvas.enums.LayerType;
 import com.loopico.videocanvas.enums.ScreenName;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class Manager {
 
-    private long cursorID ;
+    //private long cursorID ;
 
     private Map<ScreenName,Screen> screensMap;
     private ScreenName activeScreen;
@@ -67,16 +67,31 @@ public class Manager {
     public LayerType getCurrentLayerType() {
         return getCurrentScreen().getCurrentLayerType();
     }
-    public long getCursorID() {
-        return cursorID;
+    public long getCursorID(Context ctx) {
+
+        SharedPreferences prefs = ctx.getSharedPreferences("MY_PREFS_NAME", ctx.MODE_PRIVATE);
+        Integer id = prefs.getInt("id", 0);
+        return id;
     }
 
-    public void addCursorID() {
-        cursorID++;
+    public void addCursorID(Context ctx) {
+        //cursorID++;
+
+        SharedPreferences prefs = ctx.getSharedPreferences("MY_PREFS_NAME", ctx.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Integer id = prefs.getInt("id", 0);
+        id++;
+        editor.putInt("id", id);
+        editor.commit();
+
     }
     public <T extends Cursor> void add (T item) {
 
         getCurrentScreen().add(item);
+    }
+    public <T extends Cursor> void remove (T item) {
+
+        getCurrentScreen().remove(item);
     }
     public ScreenName getActiveScreen() {
         return activeScreen;

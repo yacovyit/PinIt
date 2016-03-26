@@ -3,7 +3,7 @@ package com.loopico.videocanvas.pinitclasses;
 import com.loopico.videocanvas.enums.LayerType;
 import com.loopico.videocanvas.enums.Origin;
 import com.loopico.videocanvas.enums.ScreenName;
-import com.loopico.videocanvas.web.FireBasePushIdGenerator;
+import com.loopico.videocanvas.firebase.FireBasePushIdGenerator;
 
 import java.util.Date;
 
@@ -16,9 +16,6 @@ public class Cursor {
 
     private long id;
     private String fireBaseClientId;
-
-
-
     private String fireBaseSrcClientId;
     private int x;
     private int y;
@@ -107,6 +104,7 @@ public class Cursor {
     public String getFireBaseSrcClientId() {
         return fireBaseSrcClientId;
     }
+
 
     public void setFireBaseSrcClientId(String fireBaseSrcClientId) {
         this.fireBaseSrcClientId = fireBaseSrcClientId;

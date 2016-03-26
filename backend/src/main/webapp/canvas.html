@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <link rel='stylesheet' type='text/css' href='css/canvas.css'>
+    <script type="application/javascript">
+
+    function drawImage(ctx,x,y,imgSrc,r,g,b){
+        var img = new Image;
+
+        img.onload = function(){
+
+            ctx.drawImage(img,x-img.width/2,y -img.height); // Or at whatever offset you like
+            var imageData = ctx.getImageData(x-img.width/2 , y -img.height, img.width, img.height);
+             var data = imageData.data;
+              for(var i = 0; i < data.length; i += 4) {
+                  // red
+                  data[i] = r ;
+                  // green
+                  data[i + 1] = g;
+                  // blue
+                  data[i + 2] = b;
+                }
+                 // overwrite original image
+            ctx.putImageData(imageData, x-img.width/2, y-img.height);
+        };
+        img.src = imgSrc;
+    }
+  </script>
+</head>
+<body>
+<div class="container" >
+    <div class="centeredDiv row" >
+        <div class="col-md-3 box ">
+            <h3><span class="label label-success">Cursors</span></h3>
+            <ul id="cursorList" class="list-group scroll">
+            </ul>
+        </div>
+        <div class="col-md-4 box">
+
+            <h3><span class="label label-primary">Star Wars</span></h3>
+            <canvas id="canvas1" width="1440" height="2040" ></canvas>
+        </div>
+        <div class="col-md-4 box">
+
+            <h3><span class="label label-primary">Larry Bird</span></h3>
+            <canvas id="canvas2" width="1440" height="2040" ></canvas>
+        </div>
+
+    </div>
+</div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script>
+        var rows_size = 20;
+        var col_size = 10;
+        var pin = 'img/pin.png' ;
+        var target = 'img/target_sm.png' ;
+
+        var screen1 = document.getElementById('canvas1')
+        var screen2 = document.getElementById('canvas2')
+
+        var ctxScreen1 = screen1.getContext('2d');
+        var ctxScreen2 = screen2.getContext('2d');
+
+        var url = 'https://wizardapp.firebaseio.com/camera_ip/';
+        //var url_screen_1_red = 'https://wizardapp.firebaseio.com/camera_ip/STAR_WARS/RED/WIZARD';
+
+
+    var defaultsettings = {
+                        screen_1_red_wizard : { "screen" : "STAR_WARS", "layer" : "RED" ,"origin":"WIZARD","img":pin,"ctx":ctxScreen1,"r":255,"g":0,"b":0 ,"li_color_class":"red"},
+                        screen_1_green_wizard : { "screen" : "STAR_WARS", "layer" : "GREEN" ,"origin":"WIZARD","img":pin,"ctx":ctxScreen1,"r":92,"g":182,"b":60,"li_color_class":"green" },
+                        screen_1_blue_wizard : { "screen" : "STAR_WARS", "layer" : "BLUE" ,"origin":"WIZARD","img":pin,"ctx":ctxScreen1,"r":0,"g":0,"b":255,"li_color_class":"blue" },
+
+                        screen_2_red_wizard : { "screen" : "LARRY_BIRD", "layer" : "RED" ,"origin":"WIZARD","img":pin,"ctx":ctxScreen2,"r":255,"g":0,"b":0, "li_color_class":"red"},
+                        screen_2_green_wizard : { "screen" : "LARRY_BIRD", "layer" : "GREEN" ,"origin":"WIZARD","img":pin,"ctx":ctxScreen2,"r":92,"g":182,"b":60 ,"li_color_class":"green"},
+                        screen_2_blue_wizard : { "screen" : "LARRY_BIRD", "layer" : "BLUE" ,"origin":"WIZARD","img":pin,"ctx":ctxScreen2,"r":0,"g":0,"b":255,"li_color_class":"blue" },
+
+                      };
+    $.each(defaultsettings, function(key, value) {
+        console.log(key, value);
+         new Firebase(url +"/"+value["screen"] +"/" +value["layer"] +"/" + value["origin"]  ).on('child_added', function(snapshot) {
+
+            var screen = snapshot.val();
+            var x = screen.cursor.x;
+            var y = screen.cursor.y;
+
+            //add li
+            var listContainer = $('#cursorList');
+
+            var rows = value["ctx"].canvas.width/col_size;
+            var col = value["ctx"].canvas.height/rows_size;
+            c = Math.floor(x/rows) + 1;
+            r = Math.floor(y/col) + 1 ;
+            var matrix = '[' + r + ',' + c + '] ' + value["screen"].split("_")[0];
+            listContainer.prepend('<li class="list-group-item ' +value["li_color_class"]+' ">(X=' + x + ", Y=" + y + ')\t' + matrix +'</li>');
+
+            drawImage(value["ctx"],x,y,value["img"],value["r"],value["g"],value["b"]);
+        });
+
+
+    });
+
+    function drawTable(ctx){
+        var w = ctx.canvas.width;
+        var h = ctx.canvas.height;
+        var rows = w/col_size
+        var col = h/rows_size
+        for (var i=0;i<w;i += rows ){
+                  //ctx.lineWidth = 1+i;
+                  ctx.beginPath();
+                  ctx.moveTo(i,0);
+                  ctx.lineTo(i,h);
+                  ctx.stroke();
+        }
+         for (var i=0;i<h;i += col ){
+                  //ctx.lineWidth = 1+i;
+                  ctx.beginPath();
+                  ctx.moveTo(0,i);
+                  ctx.lineTo(h,i);
+                  ctx.stroke();
+        }
+    }
+    drawTable(ctxScreen1);
+    drawTable(ctxScreen2);
+    </script>
+
+</body>
+</html>
+<!--$('#messageInput').keypress(function (e) {-->
+<!--if (e.keyCode == 13) {-->
+<!--var name = $('#nameInput').val();-->
+<!--var text = $('#messageInput').val();-->
+<!--//myDataRef.push({name: name, text: text});-->
+<!--$('#messageInput').val('');-->
+<!--}-->
+<!--});-->
+
+<!--function displayChatMessage(x,y) {-->
+<!--$('<div/>').text('x ' + x ).prepend($('<em/>').text(' y ' + y)).appendTo($('#messagesDiv'));-->
+<!--$('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;-->
+<!--};-->
