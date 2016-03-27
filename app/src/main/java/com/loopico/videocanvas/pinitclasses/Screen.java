@@ -47,12 +47,13 @@ public class Screen<T extends Cursor> implements IScreen<T>,ICursor<T> {
         activeLayerType = type;
     }
 
-
+    @Override
     public void add(T item) {
         if (item!=null) {
             layers.get(item.getLayerColor()).add(item);
         }
     }
+    @Override
     public boolean remove(T item) {
         if (item!=null) {
            return  layers.get(item.getLayerColor()).remove(item);

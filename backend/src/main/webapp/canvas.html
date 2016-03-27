@@ -33,6 +33,10 @@
   </script>
 </head>
 <body>
+<div class="alert alert-warning alert-dismissable" id="alert" style="display:none;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong id="alert_message">Warning!</strong>
+</div>
 <div class="container" >
     <div class="centeredDiv row" >
         <div class="col-md-3 box ">
@@ -97,12 +101,19 @@
             r = Math.floor(y/col) + 1 ;
             var matrix = '[' + r + ',' + c + '] ' + value["screen"].split("_")[0];
             listContainer.prepend('<li class="list-group-item ' +value["li_color_class"]+' ">(X=' + x + ", Y=" + y + ')\t' + matrix +'</li>');
-
             drawImage(value["ctx"],x,y,value["img"],value["r"],value["g"],value["b"]);
         });
 
 
     });
+
+    var urlAlert = 'https://wizardapp.firebaseio.com/alert/';
+     new Firebase(urlAlert).on('child_added', function(snapshot) {
+
+            var alert = snapshot.val();
+            $('#alert_message').text(alert);
+            $('#alert').show();
+        });
 
     function drawTable(ctx){
         var w = ctx.canvas.width;
@@ -126,10 +137,17 @@
     }
     drawTable(ctxScreen1);
     drawTable(ctxScreen2);
+
+    $('.alert .close').on('click', function(e) {
+        $(this).parent().hide();
+    });
+
     </script>
 
 </body>
 </html>
+
+
 <!--$('#messageInput').keypress(function (e) {-->
 <!--if (e.keyCode == 13) {-->
 <!--var name = $('#nameInput').val();-->
