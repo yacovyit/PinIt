@@ -103,7 +103,7 @@ public class CursorSurfaceView extends SurfaceView implements SurfaceHolder.Call
                 canvas.drawText(cursor.getId() + "", cursor.getX(), cursor.getY(), paint);
             }
         }
-        synchronized (list){
+        synchronized (wizardList){
             for (Cursor cursor :wizardList) {
                 canvas.drawBitmap(Utils.changeImageColor(AppSingleton.getInstance().getWizardIcon(), Manager.Instance().getCurrentColor()), cursor.getX() - (AppSingleton.getInstance().getTargetIcon().getWidth() / 2), cursor.getY() - (AppSingleton.getInstance().getTargetIcon().getHeight() / 2), null);
                 canvas.drawText(cursor.getId()+"", cursor.getX(),cursor.getY(),paint);
