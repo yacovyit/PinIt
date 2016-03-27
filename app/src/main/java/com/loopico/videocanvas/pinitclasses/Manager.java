@@ -7,6 +7,7 @@ import com.loopico.videocanvas.app.Globals;
 import com.loopico.videocanvas.enums.LayerType;
 import com.loopico.videocanvas.enums.ScreenName;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class Manager {
     private ScreenName activeScreen;
     private static Manager manager;
     private Manager(){
-        screensMap = new Hashtable<>();
+        screensMap = new HashMap<>();
         screensMap.put(ScreenName.STAR_WARS,new VideoScreen(Globals.starWarsUrl));
         screensMap.put(ScreenName.LARRY_BIRD,new VideoScreen(Globals.larryBirdUrl));
 
