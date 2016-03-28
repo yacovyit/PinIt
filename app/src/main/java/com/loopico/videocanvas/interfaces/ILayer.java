@@ -8,4 +8,5 @@ import com.loopico.videocanvas.enums.Origin;
 public interface ILayer<E>  {
     void clear(Origin origin);
     void clear();
+    //TODO add layers
 }

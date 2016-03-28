@@ -12,4 +12,5 @@ public interface IScreen<T extends Cursor>  {
     void clear();
     Layer<T> getActiveLayer();
     void setActiveLayer(LayerType type);
+    //TODO add layers
 }
