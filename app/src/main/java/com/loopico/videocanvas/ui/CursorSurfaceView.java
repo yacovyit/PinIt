@@ -133,10 +133,7 @@ public class CursorSurfaceView extends SurfaceView implements SurfaceHolder.Call
                 try
                 {
                     canvas = holder.lockCanvas(null);
-                    synchronized (holder)
-                    {
-                        postInvalidate();
-                    }
+                    postInvalidate();
                 }
                 finally
                 {
